@@ -1,0 +1,15 @@
+{
+    "name": "orquestrator",
+    "description": " Return a JSON response where contains the ID of the agent selected according to the intention of the User",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "route": {
+                "type": "integer",
+                "enum": [],
+                "description": "orquestrator ID selected"
+            }
+        },
+        "required": ["route"]
+    }
+}
