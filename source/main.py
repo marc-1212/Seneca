@@ -12,18 +12,17 @@ from time import sleep
 
 def recive_message_from_user(state: GeneralState)-> GeneralState:
     user_input = input("User:" )
-    state.GeneralMessages += [HumanMessage(user_input)]
+    state.messages.append(HumanMessage(user_input))
     return state
 def main():
     #return
-    model = ChatGroq(model="llama-3.1-8b-instant",  
+    model = ChatGroq(model="openai/gpt-oss-120b",  
                             temperature=0,  verbose=True)
     graph = StateGraph(GeneralState)
     graph.add_node("UserInput", recive_message_from_user)
     graph.add_node("Orchestrator", Orchestrate)
-    graph.add_node("Secretary", AGENT_REGISTRY["Secretary"]["class"](model).talk())
-    graph.add_node("Seneca", AGENT_REGISTRY["Seneca"]["class"](model).talk())
-
+    graph.add_node("Secretary", AGENT_REGISTRY["Secretary"]["class"](model))
+    graph.add_node("Seneca", AGENT_REGISTRY["Seneca"]["class"](model))
     graph.set_entry_point("UserInput")
     graph.add_edge("UserInput", "Orchestrator")
     graph.add_edge("Seneca", "UserInput")
@@ -31,10 +30,13 @@ def main():
     app = graph.compile()
     final_state= app.invoke(
             {
-                "GeneralMessages": [],
-                "seneca": None,
+                "messages": [],
+                "seneca": {
+                     "query_last_msg": None,
+                     "query_conversation"  : None    
+                },
                 "secretary": None,
-                "lastNode": "start"
+                "lastNode": ""
             })
     print(final_state)
     return final_state["lastNode"]

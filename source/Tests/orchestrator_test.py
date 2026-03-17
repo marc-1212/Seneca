@@ -14,7 +14,7 @@ class TestOrchestrator:
                              ["Where can I order food?", "Secretary"],
                              ["When do I have the meeting?", "Secretary"],
                              ["What is the purpose of life?","Seneca" ],
-                             ["When is the Birthday of Marc?", "Secretary"],
+                             ["Where is the nearest square?", "Secretary"],
                              ["How can I manage the anger of this moment?", "Seneca"],
                              ["I would like to have a new haircut", "Secretary" ],
                              ["I need to find a supermarket", "Secretary"],
